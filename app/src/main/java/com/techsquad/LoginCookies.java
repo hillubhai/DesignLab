@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 class LoginCookies {
-    static final String JWT_ACCESS_NAME = "access_token";
-    static final String JWT_REFRESH_NAME = "refresh_token";
+    static final String JWT_ACCESS_NAME = "access_token_cookie";
+    static final String JWT_REFRESH_NAME = "refresh_token_cookie";
     static final String JWT_ACCESS_CSRF_NAME = "csrf_access_token";
     static final String JWT_REFRESH_CSRF_NAME = "csrf_refresh_token";
 

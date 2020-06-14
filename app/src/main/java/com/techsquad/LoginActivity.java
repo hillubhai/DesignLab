@@ -1,10 +1,11 @@
 package com.techsquad;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,31 +34,30 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText email_edit_text;
+    private TextInputEditText phone_edit_text;
     private TextInputEditText password_edit_text;
-    private AppCompatButton login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email_edit_text = findViewById(R.id.email_edit_text);
+        phone_edit_text = findViewById(R.id.email_edit_text);
         password_edit_text = findViewById(R.id.password_edit_text);
-        login = findViewById(R.id.login);
+        AppCompatButton login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verify()) login();
+                if (verify()) checkPhoneInDB();
             }
         });
     }
 
     private boolean verify() {
-        if (TextUtils.isEmpty(email_edit_text.getText())) {
-            Toast.makeText(this, "Enter email", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(phone_edit_text.getText())) {
+            Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email_edit_text.getText()).matches()) {
-            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
+        } else if (phone_edit_text.getText().toString().length() != 10) {
+            Toast.makeText(this, "Phone number must be 10 digits", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (password_edit_text.getText() == null || password_edit_text.getText().length() < 6) {
@@ -65,6 +65,60 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void checkPhoneInDB() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServerURL.PHONE_CHECK_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject userObj = new JSONObject(response);
+                    if (userObj.getInt("exists") == 1) {
+                        login();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert);
+                        builder.setTitle("User not found")
+                                .setMessage("User does not exist. Register?")
+                                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                                    }
+                                })
+                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                        builder.show();
+                    }
+                } catch (JSONException | NullPointerException e) {
+                    Toast.makeText(LoginActivity.this, "Error logging in", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error == null || error.networkResponse == null)
+                    return;
+                String statusCode = String.valueOf(error.networkResponse.statusCode), body;
+                body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                if (statusCode.equals("500"))
+                    Toast.makeText(LoginActivity.this, "Server could not be reached\nError code " + statusCode, Toast.LENGTH_SHORT).show();
+                Log.e("PhoneError", body);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("mobile", phone_edit_text.getText().toString());
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(4000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
     private void login() {
@@ -77,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject userObj = new JSONObject(response);
                     List<HttpCookie> cookieList = manager.getCookieStore().getCookies();
+                    Log.e("cookie", cookieList.toString());
                     if (userObj.getInt("success") == 1) {
                         Toast.makeText(LoginActivity.this, "Logging in", Toast.LENGTH_SHORT).show();
                         User user = new User(userObj.getString("user_fname"), userObj.getString("user_lname"),
@@ -112,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", email_edit_text.getText().toString());
+                params.put("mobile", phone_edit_text.getText().toString());
                 params.put("pwd", password_edit_text.getText().toString());
                 params.put("remember", "true");
                 return params;

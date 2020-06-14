@@ -1,13 +1,13 @@
 package com.techsquad;
 
 final class ServerURL {
-    private static final String BASE_URL = "";
-    static final String LOGIN_URL = BASE_URL + "/";
-    static final String LOGOUT_URL = BASE_URL + "/";
-    static final String PHONE_CHECK_URL = BASE_URL + "/";
-    static final String VERIFY_TOKEN_URL = BASE_URL + "/";
+    private static final String BASE_URL = "https://designlabstuff.pythonanywhere.com";
+    static final String LOGIN_URL = BASE_URL + "/token/login";
+    static final String LOGOUT_URL = BASE_URL + "/token/remove";
+    static final String PHONE_CHECK_URL = BASE_URL + "/token/exists";
+    static final String VERIFY_TOKEN_URL = BASE_URL + "/token/verify";
     static final String REFRESH_TOKEN_URL = BASE_URL + "/";
-    static final String CUSTOMER_REGISTER_URL = BASE_URL + "/";
+    static final String CUSTOMER_REGISTER_URL = BASE_URL + "/api/register_cust";
 
     static final String SEARCH_URL = BASE_URL + "/";
     static final String DRIVER_BOOK_URL = BASE_URL + "/";
@@ -20,7 +20,7 @@ final class ServerURL {
     private static final String REVERSE_GEOCODE_REQUEST = "https://maps.googleapis.com/maps/api/geocode/json?&latlng=";
 
     static String getMapsAppURL(String lat, String lon) {
-        return "http://maps.google.com/maps?daddr=" + lat + "," + lon;
+        return "https://maps.google.com/maps?daddr=" + lat + "," + lon;
     }
 
     static String getRevGeoURL(String s) {
