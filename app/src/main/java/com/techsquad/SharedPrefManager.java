@@ -68,8 +68,8 @@ class SharedPrefManager {
     void setAccessCookie(Map<String, String> cookieList) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_ACCESS, cookieList.get(LoginCookies.JWT_ACCESS_NAME));
-        editor.putString(KEY_ACCESS_CSRF, cookieList.get(LoginCookies.JWT_ACCESS_CSRF_NAME));
+        editor.putString(KEY_ACCESS, cookieList.get(LoginCookies.JWT_ACCESS_COOKIE_NAME));
+        editor.putString(KEY_ACCESS_CSRF, cookieList.get(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME));
         editor.commit();
     }
 
@@ -82,10 +82,10 @@ class SharedPrefManager {
     LoginCookies getLogin() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Map<String, String> cookieList = new HashMap<>();
-        cookieList.put(LoginCookies.JWT_ACCESS_NAME, sharedPreferences.getString(KEY_ACCESS, null));
-        cookieList.put(LoginCookies.JWT_REFRESH_NAME, sharedPreferences.getString(KEY_REFRESH, null));
-        cookieList.put(LoginCookies.JWT_ACCESS_CSRF_NAME, sharedPreferences.getString(KEY_ACCESS_CSRF, null));
-        cookieList.put(LoginCookies.JWT_REFRESH_CSRF_NAME, sharedPreferences.getString(KEY_REFRESH_CSRF, null));
+        cookieList.put(LoginCookies.JWT_ACCESS_COOKIE_NAME, sharedPreferences.getString(KEY_ACCESS, null));
+        cookieList.put(LoginCookies.JWT_REFRESH_COOKIE_NAME, sharedPreferences.getString(KEY_REFRESH, null));
+        cookieList.put(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME, sharedPreferences.getString(KEY_ACCESS_CSRF, null));
+        cookieList.put(LoginCookies.JWT_REFRESH_CSRF_COOKIE_NAME, sharedPreferences.getString(KEY_REFRESH_CSRF, null));
         return new LoginCookies(cookieList);
     }
 

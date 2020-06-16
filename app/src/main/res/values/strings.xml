@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Tech Squad</string>
     <string name="registration">Registration</string>
+    <string name="no_booking">NO DONATIONS NEEDED</string>
+
+    <string-array name="medNames">
+        <item>Pecimol Active +650mg</item>
+        <item>Aspirin / Acetyl Salicylic Acid(75.0 Mg)</item>
+        <item>Pantoprazole(40.0 Mg)</item>
+        <item>Amoxy Amoxycillin / Amoxicillin(250.0 Mg)</item>
+    </string-array>
+    <string-array name="mfgNames">
+        <item>Ipca</item>
+        <item>ZYDUS CADILA HEALTHCARE LTD</item>
+        <item>ALKEM LABORATORIES LTD</item>
+        <item>ALKEM LABORATORIES LTD</item>
+    </string-array>
 </resources>

@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NeedsActivity"></activity>
         <activity android:name=".PledgeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".DashActivity" />

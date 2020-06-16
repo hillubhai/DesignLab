@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 class LoginCookies {
-    static final String JWT_ACCESS_NAME = "access_token_cookie";
-    static final String JWT_REFRESH_NAME = "refresh_token_cookie";
-    static final String JWT_ACCESS_CSRF_NAME = "csrf_access_token";
-    static final String JWT_REFRESH_CSRF_NAME = "csrf_refresh_token";
+    static final String JWT_ACCESS_COOKIE_NAME = "access_token_cookie";
+    static final String JWT_REFRESH_COOKIE_NAME = "refresh_token_cookie";
+    static final String JWT_ACCESS_CSRF_COOKIE_NAME = "csrf_access_token";
+    static final String JWT_REFRESH_CSRF_COOKIE_NAME = "csrf_refresh_token";
 
     private String access;
     private String refresh;
@@ -30,12 +30,12 @@ class LoginCookies {
         for (HttpCookie cookie : cookieList) {
             jwtCookies.put(cookie.getName(), cookie.getValue());
         }
-        if (jwtCookies.containsKey(LoginCookies.JWT_ACCESS_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_NAME)
-                && jwtCookies.containsKey(LoginCookies.JWT_ACCESS_CSRF_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_CSRF_NAME)) {
-            this.access = jwtCookies.get(LoginCookies.JWT_ACCESS_NAME);
-            this.refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_NAME);
-            this.csrf_access = jwtCookies.get(LoginCookies.JWT_ACCESS_CSRF_NAME);
-            this.csrf_refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_CSRF_NAME);
+        if (jwtCookies.containsKey(LoginCookies.JWT_ACCESS_COOKIE_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_COOKIE_NAME)
+                && jwtCookies.containsKey(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_CSRF_COOKIE_NAME)) {
+            this.access = jwtCookies.get(LoginCookies.JWT_ACCESS_COOKIE_NAME);
+            this.refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_COOKIE_NAME);
+            this.csrf_access = jwtCookies.get(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME);
+            this.csrf_refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_CSRF_COOKIE_NAME);
             return true;
         } else {
             return false;
@@ -43,12 +43,12 @@ class LoginCookies {
     }
 
     private void setCookies(Map<String, String> jwtCookies) {
-        if (jwtCookies.containsKey(LoginCookies.JWT_ACCESS_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_NAME)
-                && jwtCookies.containsKey(LoginCookies.JWT_ACCESS_CSRF_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_CSRF_NAME)) {
-            this.access = jwtCookies.get(LoginCookies.JWT_ACCESS_NAME);
-            this.refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_NAME);
-            this.csrf_access = jwtCookies.get(LoginCookies.JWT_ACCESS_CSRF_NAME);
-            this.csrf_refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_CSRF_NAME);
+        if (jwtCookies.containsKey(LoginCookies.JWT_ACCESS_COOKIE_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_COOKIE_NAME)
+                && jwtCookies.containsKey(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME) && jwtCookies.containsKey(LoginCookies.JWT_REFRESH_CSRF_COOKIE_NAME)) {
+            this.access = jwtCookies.get(LoginCookies.JWT_ACCESS_COOKIE_NAME);
+            this.refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_COOKIE_NAME);
+            this.csrf_access = jwtCookies.get(LoginCookies.JWT_ACCESS_CSRF_COOKIE_NAME);
+            this.csrf_refresh = jwtCookies.get(LoginCookies.JWT_REFRESH_CSRF_COOKIE_NAME);
         }
     }
 
