@@ -1,7 +1,7 @@
 package com.techsquad;
 
 final class ServerURL {
-    private static final String BASE_URL = "http://designlabstuff.pythonanywhere.com";
+    private static final String BASE_URL = "https://designlabstuff.pythonanywhere.com";
     static final String LOGIN_URL = BASE_URL + "/token/login";
     static final String LOGOUT_URL = BASE_URL + "/token/remove";
     static final String PHONE_CHECK_URL = BASE_URL + "/token/exists";
@@ -20,7 +20,7 @@ final class ServerURL {
     private static final String REVERSE_GEOCODE_REQUEST = "https://maps.googleapis.com/maps/api/geocode/json?&latlng=";
 
     static String getMapsAppURL(String lat, String lon) {
-        return "http://maps.google.com/maps?daddr=" + lat + "," + lon;
+        return "https://maps.google.com/maps?daddr=" + lat + "," + lon;
     }
 
     static String getRevGeoURL(String s) {
